@@ -1,17 +1,16 @@
 package javasocket;
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- *
- * @author alumno
- */
 import java.io.*;
 
 public class Teclado {
+
+    Teclado() {}
+
+    private static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+    public static void setReader(BufferedReader newReader) {
+        reader = newReader;
+    }
 
     public static char LeeCaracter() {
         char ch;
@@ -24,10 +23,9 @@ public class Teclado {
     }
 
     public static String LeeCadena() {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         String str;
         try {
-            str = br.readLine();
+            str = reader.readLine();
         } catch (Exception otro) {
             str = "";
         }
@@ -43,7 +41,7 @@ public class Teclado {
 
         } catch (NumberFormatException ex) {
             respuesta = "Se ha introducido caracter no numérico";
-
+            num = 0;
         } catch (Exception otro) {
             respuesta = "Otro tipo de excepcion";
             num = 0;
@@ -51,5 +49,4 @@ public class Teclado {
         System.out.println("Su numero: " + respuesta);
         return num;
     }
-
 }

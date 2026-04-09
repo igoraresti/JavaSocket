@@ -5,43 +5,39 @@ import java.io.*;
 
 public class Client {
 
-    final String HOST = "localhost";
-    final int PUERTO = 5000;
-
-    Socket sc;
-
+    private final String host;
+    private final int puerto;
     private String mensajeRecibido;
 
-    public void initClient() /*ejecuta este metodo para correr el cliente */ {
-        try {
-            sc = new Socket(HOST, PUERTO);
-            /*conectar a un servidor en localhost con puerto 5000*/
+    public Client() {
+        this.host = "localhost";
+        this.puerto = 5000;
+    }
 
-            //Canales de entrada y salida de datos
+    public Client(String host, int puerto) {
+        this.host = host;
+        this.puerto = puerto;
+    }
 
+    public void initClient() {
+        try (Socket sc = new Socket(host, puerto)) {
             BufferedReader entrada = new BufferedReader(new InputStreamReader(sc.getInputStream()));
             PrintWriter salida = new PrintWriter(new OutputStreamWriter(sc.getOutputStream()), true);
 
             mensajeRecibido = entrada.readLine();
-            System.out.print(mensajeRecibido);
+            System.out.println(mensajeRecibido);
 
-            //enviamos el mensaje
             String mensaje = Teclado.LeeCadena();
             salida.println(mensaje);
 
             mensajeRecibido = entrada.readLine();
-            System.out.print(mensajeRecibido);
+            System.out.println(mensajeRecibido);
 
             mensajeRecibido = entrada.readLine();
-            System.out.print(mensajeRecibido);
-
-            //cerramos la conexión
-            sc.close();
+            System.out.println(mensajeRecibido);
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
-
     }
-
 }
